@@ -12,12 +12,10 @@ public class Percolation {
     public void open(int r, int c) {
         validateRange(r, c);
         grid.union(openElement(), site(r, c));
-        boolean isTopRow = r == 1;
-        if(isTopRow){
+        if(r == 1){
            grid.union(topElement(), site(r, c));
         }
-        boolean isBottomRow = r == N;
-        if(isBottomRow){
+        if(r == N){
            grid.union(bottomElement(), site(r, c));
         }
     }
