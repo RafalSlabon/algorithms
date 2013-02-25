@@ -120,8 +120,8 @@ public class PercolationTest {
         // X * * * *
         // X * * * *
         openAndCheckIfIsFullOpen(5, 1);
-        assertTrue(p.percolates());
         printPercolationGrid();
+        assertTrue(p.percolates());
     }
 
     @Test
