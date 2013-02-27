@@ -45,23 +45,23 @@ public class Percolation {
         }
     }
 
-    // is site (row i, column j) open?
-    public boolean isOpen(int i, int j) {
-        validateRange(i, j);
-        int site = site(i, j);
+    // is site (row r, column j) open?
+    public boolean isOpen(int r, int c) {
+        validateRange(r, c);
+        int site = site(r, c);
         return openSites[site];
     }
 
     // is site (row i, column j) full?
-    public boolean isFull(int i, int j) {
-        validateRange(i, j);
-        boolean isConnectedWithTop = grid.connected(topElement(), site(i, j));
-        boolean isConnectedWithBottom = grid.connected(bottomElement(), site(i, j));
-        return isOpen(i, j) && (isConnectedWithTop || isConnectedWithBottom);
+    public boolean isFull(int r, int c) {
+        validateRange(r, c);
+        boolean isConnectedWithTop = grid.connected(topElement(), site(r, c));
+        boolean isConnectedWithBottom = grid.connected(bottomElement(), site(r, c));
+        return isOpen(r, c) && (isConnectedWithTop || isConnectedWithBottom);
     }
 
-    private int site(int i, int j) {
-        return (i - 1) * N + j;
+    private int site(int r, int c) {
+        return (r - 1) * N + c;
     }
 
     // does the system percolate?
@@ -83,19 +83,19 @@ public class Percolation {
         return N * N + top + bottom;
     }
 
-    private void validateRange(int row, int col) {
-        validateRowRange(row);
-        validateColRange(col);
+    private void validateRange(int r, int c) {
+        validateRowRange(r);
+        validateColRange(c);
     }
 
-    private void validateColRange(int col) {
-        if (col < 1 || col > N) {
+    private void validateColRange(int c) {
+        if (c < 1 || c > N) {
             throw new IndexOutOfBoundsException("Column is invalid! Should <1,N>");
         }
     }
 
-    private void validateRowRange(int row) {
-        if (row < 1 || row > N) {
+    private void validateRowRange(int r) {
+        if (r < 1 || r > N) {
             throw new IndexOutOfBoundsException("Row is invalid! Should be <1,N>");
         }
     }

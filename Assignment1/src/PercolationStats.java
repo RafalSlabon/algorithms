@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class PercolationStats {
 
     private int N;
@@ -68,19 +66,27 @@ public class PercolationStats {
      */
 
     public double confidenceLo() {
-        return 0;
+        return mean() - (1.96 * stddev()) / T;
     }
 
     /**
      * returns upper bound of the 95% confidence interval
      */
     public double confidenceHi() {
-        return 0;
+        return mean() + (1.96 * stddev()) / T;
     }
 
     public static void main(String[] args) {
-        PercolationStats stats = new PercolationStats(400, 1000);
-        System.out.println("Mean " + stats.mean());
-        System.out.println("Stddev " + stats.stddev());
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Proper number of arguments is 2 e.g. java PercolationStats 200 100");
+        }
+        int N = Integer.parseInt(args[0]);
+        int T = Integer.parseInt(args[1]);
+        System.out.println("Statistic for N = " + N + " and T = " + T);
+        PercolationStats stats = new PercolationStats(N, T);
+        System.out.println("mean                    = " + stats.mean());
+        System.out.println("stddev                  = " + stats.stddev());
+        System.out.println("95% confidence interval = " + stats.confidenceLo() + ", " + stats.confidenceHi());
+
     }
 }
