@@ -4,6 +4,7 @@ public class PercolationStats {
 
     private int N;
     private int T;
+    private double[] percolationThresholds;
 
     /**
      * perform T independent computational experiments on an N-by-N grid
@@ -11,42 +12,55 @@ public class PercolationStats {
     public PercolationStats(int N, int T) {
         this.N = N;
         this.T = T;
+        percolationThresholds = new double[T];
+        for (int i = 0; i < T; i++) {
+            double threshold = (double) monteCarloSimulation() / (N * N);
+            percolationThresholds[i] = threshold;
+        }
+    }
 
+    private int monteCarloSimulation() {
         Percolation p = new Percolation(N);
-
-        while(!p.percolates()){
-        new PercolationPrinter(p).print();
-
-        int r = generateRandomInt();
-        int c = generateRandomInt();
-        while(p.isOpen(r,c)){
-            r = generateRandomInt();
-            c = generateRandomInt();
+        while (!p.percolates()) {
+            int r = generateRandomInt();
+            int c = generateRandomInt();
+            while (p.isOpen(r, c)) {
+                r = generateRandomInt();
+                c = generateRandomInt();
+            }
+            p.open(r, c);
         }
-        p.open(r,c);
-        new PercolationPrinter(p).print();
+        return computeNumberOfOpenSites(p);
+    }
+
+    private int computeNumberOfOpenSites(Percolation p) {
+        int numOfOpenSites = 0;
+        for (int r = 1; r <= N; r++) {
+            for (int c = 1; c <= N; c++) {
+                if (p.isOpen(r, c)) {
+                    numOfOpenSites++;
+                }
+            }
         }
-        new PercolationPrinter(p).print();
+        return numOfOpenSites;
     }
 
     private int generateRandomInt() {
-        return new Random().nextInt(N) + 1;
+        return StdRandom.uniform(1, N + 1);
     }
-
 
     /**
      * sample mean of percolation threshold
      */
     public double mean() {
-        return 0;
+        return StdStats.mean(percolationThresholds);
     }
 
     /**
      * sample standard deviation of percolation threshold
      */
-
     public double stddev() {
-        return 0;
+        return StdStats.stddev(percolationThresholds);
     }
 
     /**
@@ -65,6 +79,8 @@ public class PercolationStats {
     }
 
     public static void main(String[] args) {
-      new PercolationStats(5, 1);
+        PercolationStats stats = new PercolationStats(400, 1000);
+        System.out.println("Mean " + stats.mean());
+        System.out.println("Stddev " + stats.stddev());
     }
 }
