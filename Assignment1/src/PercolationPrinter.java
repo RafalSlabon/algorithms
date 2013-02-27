@@ -7,18 +7,20 @@ public class PercolationPrinter {
     }
 
     public void print(){
+        System.out.println("");
         for(int i=1;i<=p.N;i++){
             for(int j=1;j<=p.N;j++){
                 if(p.isFull(i, j)){
-                    System.out.print("F");
-                }else if(p.isOpen(i, j)){
-                    System.out.print("O");
-                } else{
                     System.out.print("*");
+                }else if(p.isOpen(i, j)){
+                    System.out.print("+");
+                } else{
+                    System.out.print("#");
                 }
                 System.out.print("\t");
             }
             System.out.println("");
         }
+        System.out.println("");
     }
 }
