@@ -77,6 +77,7 @@ public class PercolationStats {
     }
 
     public static void main(String[] args) {
+        //args = new String[]{"50","30"};
         if (args.length != 2) {
             throw new IllegalArgumentException("Proper number of arguments is 2 e.g. java PercolationStats 200 100");
         }
